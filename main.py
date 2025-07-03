@@ -30,7 +30,7 @@ def monitorar():
 
                 time1, time2 = jogo.split(" x ")
                 try:
-                    url = "https://api.the-odds-api.com/v4/sports/soccer_ireland_premier_division/odds"
+                    url = "https://api.the-odds-api.com/v4/sports/soccer_league_of_ireland/odds"
                     params = {
                         "apiKey": ODDS_API_KEY,
                         "regions": "eu",
@@ -38,6 +38,13 @@ def monitorar():
                         "oddsFormat": "decimal"
                     }
                     resp = requests.get(url, params=params)
+                    print(f"Status Code: {resp.status_code}")
+                    print(f"Resposta API (primeiros 500 chars): {resp.text[:500]}")
+
+                    if resp.status_code != 200:
+                        print("Erro na requisição da API, status diferente de 200.")
+                        continue
+
                     eventos = resp.json()
 
                     for evento in eventos:
@@ -80,3 +87,4 @@ def monitorar():
 
 if __name__ == "__main__":
     monitorar()
+
